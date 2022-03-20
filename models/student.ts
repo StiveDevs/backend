@@ -3,6 +3,7 @@ export interface Student {
 	name: string;
 	rollNo: string;
 	email: string;
+	profilePicUrl: string;
 }
 
 export const studentSchema = {
@@ -26,6 +27,11 @@ export const studentSchema = {
 			type: "string",
 			description: "Institute mail of student",
 			format: "email",
+		},
+		profilePicUrl: {
+			type: "string",
+			description: "Url to the profile picture of student",
+			format: "uri",
 		},
 	},
 };

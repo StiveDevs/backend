@@ -1,10 +1,12 @@
+import { studentSchema } from "./student";
+
 export interface Club {
 	_id: string;
 	name: string;
 	description: string;
 	logoUrl: string;
-	coordinators: string[];
-	members: string[];
+	coordinatorIds: string[];
+	memberIds: string[];
 }
 
 export const clubSchema = {
@@ -32,20 +34,12 @@ export const clubSchema = {
 		coordinators: {
 			type: "array",
 			description: "List of ids of the coordinators of the club",
-			items: {
-				type: "string",
-				description: "Id of a coordinator of the club",
-				format: "uuid",
-			},
+			items: studentSchema,
 		},
 		members: {
 			type: "array",
 			description: "List of ids of the members of the club",
-			items: {
-				type: "string",
-				description: "Id of a member of the club",
-				format: "uuid",
-			},
+			items: studentSchema,
 		},
 	},
 };

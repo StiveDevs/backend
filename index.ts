@@ -8,12 +8,15 @@ import clubRoutes from "./routes/club";
 import { studentSchema } from "./models/student";
 import { clubSchema } from "./models/club";
 import { postSchema } from "./models/post";
+import fastifySensible from "fastify-sensible";
 
 config();
 
 const fastify = Fastify({
 	logger: true,
 });
+
+fastify.register(fastifySensible);
 
 const dbUsername = encodeURIComponent(process.env.MONGODB_ADMIN_USERNAME!);
 const dbPassword = encodeURIComponent(process.env.MONGODB_ADMIN_PASSWORD!);
