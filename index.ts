@@ -18,8 +18,8 @@ const fastify = Fastify({
 
 fastify.register(fastifySensible);
 
-const dbUsername = encodeURIComponent(process.env.MONGODB_ADMIN_USERNAME!);
-const dbPassword = encodeURIComponent(process.env.MONGODB_ADMIN_PASSWORD!);
+const dbUsername = encodeURIComponent(process.env.MONGODB_USERNAME!);
+const dbPassword = encodeURIComponent(process.env.MONGODB_PASSWORD!);
 const dbName = encodeURIComponent(process.env.MONGODB_DBNAME!);
 fastify.register(fastifyMongo, {
 	url: `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.fpce1.mongodb.net/${dbName}?retryWrites=true&w=majority`,
