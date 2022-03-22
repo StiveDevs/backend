@@ -4,11 +4,11 @@ export const createdSchema = {
 	properties: {
 		acknowledged: {
 			type: "boolean",
-			description: "If database acknowledged the new insert request",
+			description: "If the object was created",
 		},
 		insertedId: {
 			type: "string",
-			description: "Id of the insert request that the database used",
+			description: "Id of the object created",
 		},
 	},
 };
@@ -19,7 +19,7 @@ export const modifiedSchema = {
 	properties: {
 		acknowledged: {
 			type: "boolean",
-			description: "If database acknowledged the new modify request",
+			description: "If modification happened",
 		},
 		modifiedCount: {
 			type: "number",
@@ -36,6 +36,21 @@ export const modifiedSchema = {
 		matchedCount: {
 			type: "number",
 			description: "Number of objects that matched the query",
+		},
+	},
+};
+
+export const deletedSchema = {
+	type: "object",
+	description: "Object deletion response from MongoDB",
+	properties: {
+		acknowledged: {
+			type: "boolean",
+			description: "If database acknowledged the delete request",
+		},
+		deletedCount: {
+			type: "number",
+			description: "Number of objects deleted",
 		},
 	},
 };

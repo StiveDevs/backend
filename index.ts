@@ -5,10 +5,14 @@ import { config } from "dotenv";
 import studentRoutes from "./routes/student";
 import postRoutes from "./routes/post";
 import clubRoutes from "./routes/club";
-import { studentSchema } from "./models/student";
-import { clubSchema } from "./models/club";
-import { postSchema } from "./models/post";
+import { studentSchema } from "./schemas/student";
+import { clubSchema } from "./schemas/club";
+import { postSchema } from "./schemas/post";
 import fastifySensible from "fastify-sensible";
+import { pollSchema } from "./schemas/poll";
+import { optionSchema } from "./schemas/option";
+import optionRoutes from "./routes/option";
+import pollRoutes from "./routes/poll";
 
 config();
 
@@ -42,13 +46,19 @@ fastify.register(fastifySwagger, {
 		],
 		definitions: {
 			Student: studentSchema,
-			Club: clubSchema,
+			Option: optionSchema,
+			Poll: pollSchema,
 			Post: postSchema,
+			Club: clubSchema,
 		},
 	},
 });
 
 fastify.register(studentRoutes, { prefix: "/student" });
+
+fastify.register(optionRoutes, { prefix: "/option" });
+
+fastify.register(pollRoutes, { prefix: "/poll" });
 
 fastify.register(postRoutes, { prefix: "/post" });
 
