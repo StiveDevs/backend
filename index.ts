@@ -66,7 +66,7 @@ fastify.register(postRoutes, { prefix: "/post" });
 
 fastify.register(clubRoutes, { prefix: "/club" });
 
-fastify.listen(3000, (err, address) => {
+fastify.listen(process.env.PORT, (err, address) => {
 	if (err) {
 		fastify.log.error(err, "Server Start");
 		process.exit(1);

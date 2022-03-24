@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev index.ts | pino-colada",
-    "start": "ts-node index.ts",
+    "start": "ts-node index.ts | pino-colada",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
