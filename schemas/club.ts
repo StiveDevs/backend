@@ -1,9 +1,17 @@
-import { ObjectId } from "mongodb";
-import { postSchema } from "./post";
-import { studentSchema } from "./student";
+import { Document, ObjectId } from "mongodb";
+import { Post, postSchema } from "./post";
+import { Student, studentSchema } from "./student";
 
 export interface Club {
-	_id: string;
+	name: string;
+	description: string;
+	logoUrl: string;
+	coordinators: Student[];
+	members: Student[];
+	posts: Post[];
+}
+
+export interface ClubDocument extends Document {
 	name: string;
 	description: string;
 	logoUrl: string;

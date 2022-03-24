@@ -24,9 +24,19 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 	const clubs = fastify.mongo.db.collection("clubs");
 	const students = fastify.mongo.db.collection("students");
 	const posts = fastify.mongo.db.collection("posts");
+	const polls = fastify.mongo.db.collection("polls");
+	const options = fastify.mongo.db.collection("options");
 
 	fastify.addHook("onRequest", async (request, reply) => {
-		await checkIdsHandler(fastify, request, clubs, students, posts);
+		await checkIdsHandler(
+			fastify,
+			request,
+			clubs,
+			students,
+			posts,
+			polls,
+			options
+		);
 	});
 
 	fastify.get("/", {
@@ -107,14 +117,15 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 
 	fastify.delete("/:clubId", {
 		schema: {
-			summary: "Delete the club",
+			summary:
+				"Delete the club and its pretaining posts along with their polls and options",
 			tags: ["Club"],
 			response: {
 				204: deletedSchema,
 			},
 		},
 		handler: async (request, reply) =>
-			deleteClubHandler(request, reply, clubs),
+			deleteClubHandler(request, reply, clubs, posts, polls, options),
 	});
 
 	fastify.patch("/:clubId/remove/member/:studentId", {

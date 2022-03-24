@@ -61,7 +61,7 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 			},
 		},
 		handler: async (request, reply) =>
-			createPollHandler(request, reply, polls),
+			createPollHandler(request, reply, polls, options),
 	});
 
 	fastify.patch("/:pollId/add/option/:optionId", {
@@ -79,14 +79,14 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 
 	fastify.delete("/:pollId", {
 		schema: {
-			summary: "Delete the poll",
+			summary: "Delete the poll and its options",
 			tags: ["Poll"],
 			response: {
 				204: deletedSchema,
 			},
 		},
 		handler: async (request, reply) =>
-			deletePollHandler(request, reply, polls),
+			deletePollHandler(request, reply, polls, options),
 	});
 
 	fastify.patch("/:pollId/remove/option/:optionId", {

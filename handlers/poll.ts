@@ -2,6 +2,8 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { Collection } from "mongodb";
 import { ObjectId } from "fastify-mongodb";
+import { createOptionHandler, deleteOptionHandler } from "./option";
+import { Poll, PollDocument } from "../schemas/poll";
 
 export async function getPollsHandler(
 	request: FastifyRequest,
@@ -69,9 +71,25 @@ export async function getPollHandler(
 export async function createPollHandler(
 	request: FastifyRequest,
 	reply: FastifyReply,
-	polls: Collection
+	polls: Collection,
+	options: Collection
 ) {
-	return polls.insertOne(request.body);
+	const body: Poll = request.body;
+	const { options: reqOptions, ...reqPoll } = body;
+	const pollRes = await polls.insertOne(reqPoll);
+	if (!reqOptions || !pollRes.insertedId) {
+		return pollRes;
+	}
+	for (const reqOption of reqOptions) {
+		request.body = reqOption;
+		createOptionHandler(request, reply, options).then((optionRes) => {
+			if (!optionRes.insertedId) return;
+			request.params.pollId = pollRes.insertedId;
+			request.params.optionId = optionRes.insertedId;
+			addPollOptionHandler(request, reply, polls);
+		});
+	}
+	return pollRes;
 }
 
 export async function addPollOptionHandler(
@@ -88,9 +106,23 @@ export async function addPollOptionHandler(
 export async function deletePollHandler(
 	request: FastifyRequest,
 	reply: FastifyReply,
-	polls: Collection
+	polls: Collection,
+	options: Collection
 ) {
-	return polls.deleteOne({ _id: ObjectId(request.params.pollId) });
+	const poll: PollDocument = await polls.findOne({
+		_id: ObjectId(request.params.pollId),
+	});
+	const pollRes = polls.deleteOne({
+		_id: ObjectId(request.params.pollId),
+	});
+	if (!poll.optionIds) {
+		return pollRes;
+	}
+	for (const optionId of poll.optionIds) {
+		request.params.optionId = optionId;
+		deleteOptionHandler(request, reply, options);
+	}
+	return pollRes;
 }
 
 export async function removePollOptionHandler(

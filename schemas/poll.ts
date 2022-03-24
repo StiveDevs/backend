@@ -1,8 +1,14 @@
-import { ObjectId } from "mongodb";
-import { optionSchema } from "./option";
+import { Document, ObjectId } from "mongodb";
+import { Option, optionCreateSchema, optionSchema } from "./option";
 
 export interface Poll {
-	_id: string;
+	name: string;
+	maxOptionsPerStudent: number;
+	options: Option[];
+}
+
+export interface PollDocument extends Document {
+	name: string;
 	maxOptionsPerStudent: number;
 	optionIds: ObjectId[];
 }
@@ -10,7 +16,7 @@ export interface Poll {
 export const pollCreateSchema = {
 	type: "object",
 	description: "Poll create schema",
-	required: ["name"],
+	required: ["name", "maxOptionsPerStudent"],
 	properties: {
 		name: {
 			type: "string",
@@ -20,6 +26,12 @@ export const pollCreateSchema = {
 			type: "number",
 			description:
 				"Maximum number of options a student is allowed to select",
+		},
+		options: {
+			type: "array",
+			description: "List of options availaible with the poll",
+			items: optionCreateSchema,
+			uniqueItems: true,
 		},
 	},
 };

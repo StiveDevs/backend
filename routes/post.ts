@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { FastifyPluginAsync } from "fastify";
-import { ObjectId } from "mongodb";
 import { postCreateSchema, postSchema } from "../schemas/post";
 import {
 	createdSchema,
@@ -20,9 +19,10 @@ import {
 const postRoutes: FastifyPluginAsync = async function (fastify, opts) {
 	const posts = fastify.mongo.db.collection("posts");
 	const polls = fastify.mongo.db.collection("polls");
+	const options = fastify.mongo.db.collection("options");
 
 	fastify.addHook("onRequest", async (request, reply) => {
-		await checkIdsHandler(fastify, request, posts, polls);
+		await checkIdsHandler(fastify, request, posts, polls, options);
 	});
 
 	fastify.get("/", {
@@ -62,7 +62,7 @@ const postRoutes: FastifyPluginAsync = async function (fastify, opts) {
 			},
 		},
 		handler: async (request, reply) =>
-			createPostHandler(request, reply, posts),
+			createPostHandler(request, reply, posts, polls, options),
 	});
 
 	fastify.patch("/:postId/add/poll/:pollId", {
@@ -79,14 +79,14 @@ const postRoutes: FastifyPluginAsync = async function (fastify, opts) {
 
 	fastify.delete("/:postId", {
 		schema: {
-			summary: "Delete the post",
+			summary: "Delete the post along with its polls and options",
 			tags: ["Post"],
 			response: {
 				204: deletedSchema,
 			},
 		},
 		handler: async (request, reply) =>
-			deletePostHandler(request, reply, posts),
+			deletePostHandler(request, reply, posts, polls, options),
 	});
 
 	fastify.patch("/:postId/remove/poll/:pollId", {

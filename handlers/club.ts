@@ -2,6 +2,8 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { Collection } from "mongodb";
 import { ObjectId } from "fastify-mongodb";
+import { Club, ClubDocument } from "../schemas/club";
+import { createPostHandler, deletePostHandler } from "./post";
 
 export async function getClubsHandler(
 	request: FastifyRequest,
@@ -192,9 +194,25 @@ export async function addClubPostHandler(
 export async function deleteClubHandler(
 	request: FastifyRequest,
 	reply: FastifyReply,
-	clubs: Collection
+	clubs: Collection,
+	posts: Collection,
+	polls: Collection,
+	options: Collection
 ) {
-	return clubs.deleteOne({ _id: ObjectId(request.params.clubId) });
+	const club: ClubDocument = await clubs.findOne({
+		_id: ObjectId(request.params.clubId),
+	});
+	const clubRes = clubs.deleteOne({
+		_id: ObjectId(request.params.clubId),
+	});
+	if (!club.postIds) {
+		return clubRes;
+	}
+	for (const postId of club.postIds) {
+		request.params.postId = postId;
+		deletePostHandler(request, reply, posts, polls, options);
+	}
+	return clubRes;
 }
 
 export async function removeClubMemberHandler(

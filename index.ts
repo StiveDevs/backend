@@ -43,6 +43,8 @@ fastify.register(fastifySwagger, {
 			{ name: "Student", description: "Students related end-points" },
 			{ name: "Club", description: "Clubs related end-points" },
 			{ name: "Post", description: "Posts related end-points" },
+			{ name: "Poll", description: "Polls related end-points" },
+			{ name: "Option", description: "Options related end-points" },
 		],
 		definitions: {
 			Student: studentSchema,

@@ -3,7 +3,6 @@ import { studentSchema } from "./student";
 
 export interface Option {
 	name: string;
-	selectedByIds: ObjectId[];
 }
 
 export const optionCreateSchema = {
