@@ -47,6 +47,7 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				200: {
 					type: "array",
 					items: clubSchema,
+					description: "List of all the clubs",
 				},
 			},
 		},

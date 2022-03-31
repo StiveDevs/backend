@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import fastifyMongo from "fastify-mongodb";
 import fastifySwagger from "fastify-swagger";
+import fastifyCors from "fastify-cors";
 import { config } from "dotenv";
 import studentRoutes from "./routes/student";
 import postRoutes from "./routes/post";
@@ -19,6 +20,8 @@ config();
 const fastify = Fastify({
 	logger: true,
 });
+
+fastify.register(fastifyCors);
 
 fastify.register(fastifySensible);
 

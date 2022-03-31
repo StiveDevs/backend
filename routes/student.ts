@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { FastifyPluginAsync } from "fastify";
-import { ObjectId } from "mongodb";
 import { studentCreateSchema, studentSchema } from "../schemas/student";
-import { createdSchema, deletedSchema } from "../schemas/commonSchemas";
+import { deletedSchema, modifiedSchema } from "../schemas/commonSchemas";
 import { checkIdsHandler } from "../handlers/commonHandlers";
 import {
 	createStudentHandler,
@@ -26,6 +25,7 @@ const studentRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				200: {
 					type: "array",
 					items: studentSchema,
+					description: "List of all the students",
 				},
 			},
 		},
@@ -51,7 +51,7 @@ const studentRoutes: FastifyPluginAsync = async function (fastify, opts) {
 			tags: ["Student"],
 			body: studentCreateSchema,
 			response: {
-				201: createdSchema,
+				201: modifiedSchema,
 			},
 		},
 		handler: async (request, reply) =>

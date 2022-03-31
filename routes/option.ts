@@ -32,6 +32,7 @@ const optionRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				200: {
 					type: "array",
 					items: optionSchema,
+					description: "List of all the options",
 				},
 			},
 		},

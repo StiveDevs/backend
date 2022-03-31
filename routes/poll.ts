@@ -32,6 +32,7 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				200: {
 					type: "array",
 					items: pollSchema,
+					description: "List of all the polls",
 				},
 			},
 		},

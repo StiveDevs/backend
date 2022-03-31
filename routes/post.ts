@@ -33,6 +33,7 @@ const postRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				200: {
 					type: "array",
 					items: postSchema,
+					description: "List of all the posts",
 				},
 			},
 		},

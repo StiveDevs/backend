@@ -24,7 +24,9 @@ export async function createStudentHandler(
 	reply: FastifyReply,
 	students: Collection
 ) {
-	return students.insertOne(request.body);
+	return students.replaceOne({ email: request.body.email }, request.body, {
+		upsert: true,
+	});
 }
 
 export async function deleteStudentHandler(
