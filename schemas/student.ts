@@ -10,10 +10,6 @@ export const studentCreateSchema = {
 	description: "Student create schema",
 	required: ["email"],
 	properties: {
-		_id: {
-			type: "string",
-			description: "Id of the student",
-		},
 		name: {
 			type: "string",
 			description: "Name of student",

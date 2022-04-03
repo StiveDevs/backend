@@ -21,7 +21,9 @@ const fastify = Fastify({
 	logger: true,
 });
 
-fastify.register(fastifyCors);
+fastify.register(fastifyCors, {
+	methods: ["GET", "POST", "DELETE", "PATCH"],
+});
 
 fastify.register(fastifySensible);
 
