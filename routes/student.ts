@@ -38,7 +38,7 @@ const studentRoutes: FastifyPluginAsync = async function (fastify, opts) {
 			summary: "Get details of a single student",
 			tags: ["Student"],
 			response: {
-				200: studentCreateSchema,
+				200: studentSchema,
 			},
 		},
 		handler: async (request, reply) =>
@@ -54,8 +54,10 @@ const studentRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				201: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			createStudentHandler(request, reply, students),
+		handler: async (request, reply) => {
+			reply.status(201);
+			return createStudentHandler(request, reply, students);
+		},
 	});
 
 	fastify.delete("/:studentId", {
@@ -66,8 +68,10 @@ const studentRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: deletedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			deleteStudentHandler(request, reply, students),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return deleteStudentHandler(request, reply, students);
+		},
 	});
 };
 

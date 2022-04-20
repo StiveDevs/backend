@@ -61,8 +61,10 @@ const optionRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				201: createdSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			createOptionHandler(request, reply, options),
+		handler: async (request, reply) => {
+			reply.status(201);
+			return createOptionHandler(request, reply, options);
+		},
 	});
 
 	fastify.patch("/:optionId/add/selectedBy/:studentId", {
@@ -74,8 +76,10 @@ const optionRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			addOptionSelectedByHandler(request, reply, options),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return addOptionSelectedByHandler(request, reply, options);
+		},
 	});
 
 	fastify.delete("/:optionId", {
@@ -86,8 +90,10 @@ const optionRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: deletedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			deleteOptionHandler(request, reply, options),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return deleteOptionHandler(request, reply, options);
+		},
 	});
 
 	fastify.patch("/:optionId/remove/selectedBy/:studentId", {
@@ -99,8 +105,10 @@ const optionRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			removeOptionSelectedByHandler(request, reply, options),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return removeOptionSelectedByHandler(request, reply, options);
+		},
 	});
 };
 

@@ -20,6 +20,7 @@ export const optionCreateSchema = {
 export const optionSchema = {
 	type: "object",
 	description: "Option",
+	required: ["name"],
 	properties: {
 		_id: {
 			type: "string",

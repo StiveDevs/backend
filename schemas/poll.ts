@@ -39,7 +39,7 @@ export const pollCreateSchema = {
 export const pollSchema = {
 	type: "object",
 	description: "Poll",
-	required: ["name"],
+	required: ["name", "maxOptionsPerStudent"],
 	properties: {
 		_id: {
 			type: "string",

@@ -3,26 +3,29 @@
   "version": "1.0.0",
   "description": "backend for stive",
   "main": "index.ts",
+  "type": "commonjs",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "fastify-cli": "^2.15.0",
+    "fastify": "^3.28.0",
     "fastify-cors": "^6.0.3",
     "fastify-mongodb": "^4.1.1",
     "fastify-sensible": "^3.1.2",
     "fastify-swagger": "^5.0.0",
-    "pino-colada": "^2.2.2",
+    "pino-pretty": "^7.6.1",
     "ts-node": "^10.7.0"
   },
   "devDependencies": {
     "@types/mongodb": "^4.0.7",
     "@types/node": "^17.0.21",
+    "@types/tap": "^15.0.6",
+    "tap": "^16.0.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.2"
   },
   "scripts": {
-    "dev": "ts-node-dev index.ts | pino-colada",
-    "start": "ts-node index.ts | pino-colada",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node-dev server.ts",
+    "start": "ts-node server.ts",
+    "test": "tap --ts --reporter=list"
   },
   "repository": {
     "type": "git",

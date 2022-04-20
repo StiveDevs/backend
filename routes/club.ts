@@ -76,8 +76,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				201: createdSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			createClubHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(201);
+			return createClubHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.patch("/:clubId/add/member/:studentId", {
@@ -88,8 +90,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			addClubMemberHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return addClubMemberHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.patch("/:clubId/add/coordinator/:studentId", {
@@ -100,8 +104,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			addClubCoordinatorHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return addClubCoordinatorHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.patch("/:clubId/add/post/:postId", {
@@ -112,8 +118,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			addClubPostHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return addClubPostHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.delete("/:clubId", {
@@ -125,8 +133,17 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: deletedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			deleteClubHandler(request, reply, clubs, posts, polls, options),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return deleteClubHandler(
+				request,
+				reply,
+				clubs,
+				posts,
+				polls,
+				options
+			);
+		},
 	});
 
 	fastify.patch("/:clubId/remove/member/:studentId", {
@@ -137,8 +154,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			removeClubMemberHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return removeClubMemberHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.patch("/:clubId/remove/coordinator/:studentId", {
@@ -149,8 +168,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			removeClubCoordinatorHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return removeClubCoordinatorHandler(request, reply, clubs);
+		},
 	});
 
 	fastify.patch("/:clubId/remove/post/:postId", {
@@ -162,8 +183,10 @@ const clubRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			removeClubPostHandler(request, reply, clubs),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return removeClubPostHandler(request, reply, clubs);
+		},
 	});
 };
 

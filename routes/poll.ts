@@ -61,8 +61,10 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				201: createdSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			createPollHandler(request, reply, polls, options),
+		handler: async (request, reply) => {
+			reply.status(201);
+			return createPollHandler(request, reply, polls, options);
+		},
 	});
 
 	fastify.patch("/:pollId/add/option/:optionId", {
@@ -74,8 +76,10 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			addPollOptionHandler(request, reply, polls),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return addPollOptionHandler(request, reply, polls);
+		},
 	});
 
 	fastify.delete("/:pollId", {
@@ -86,8 +90,10 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: deletedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			deletePollHandler(request, reply, polls, options),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return deletePollHandler(request, reply, polls, options);
+		},
 	});
 
 	fastify.patch("/:pollId/remove/option/:optionId", {
@@ -99,8 +105,10 @@ const pollRoutes: FastifyPluginAsync = async function (fastify, opts) {
 				204: modifiedSchema,
 			},
 		},
-		handler: async (request, reply) =>
-			removePollOptionHandler(request, reply, polls),
+		handler: async (request, reply) => {
+			reply.status(204);
+			return removePollOptionHandler(request, reply, polls);
+		},
 	});
 };
 
